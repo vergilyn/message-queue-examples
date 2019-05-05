@@ -1,4 +1,4 @@
-package com.vergilyn.examples.rabbit.listener;
+package com.vergilyn.examples.rocketmq.rabbitmq.listener;
 
 import java.nio.charset.StandardCharsets;
 
@@ -12,10 +12,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author VergiLyn
- * @blog http://www.cnblogs.com/VergiLyn/
  * @date 2018/9/14
  */
-/*@org.springframework.amqp.rabbit.annotation.RabbitListener(
+/*@org.springframework.amqp.rabbitmq.annotation.RabbitListener(
         admin = "",
         containerFactory = "",
         bindings = @QueueBinding(

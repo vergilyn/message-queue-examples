@@ -1,11 +1,11 @@
-package com.vergilyn.examples.producer;
+package com.vergilyn.examples.rocketmq.producer;
 
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.vergilyn.examples.RocketConstants;
-import com.vergilyn.examples.bean.TestBean;
+import com.vergilyn.examples.rocketmq.RocketConstants;
+import com.vergilyn.examples.rocketmq.bean.TestBean;
 
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;

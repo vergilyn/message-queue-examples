@@ -12,7 +12,7 @@
 
     <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
 
-<!-- spring-xml配置连接 -->
+    <!-- spring-xml配置连接 -->
     <rabbit:connection-factory
             id="connectionFactory"
             host="${spring.rabbitmq.host}"
@@ -32,11 +32,11 @@
 
     <rabbit:queue name="queue.xml-hello" durable="true" auto-delete="false" exclusive="false" >
         <!--
-          <rabbit:queue-arguments>
+          <rabbitmq:queue-arguments>
               <entry key="x-dead-letter-exchange" value="exchange.es.app_data_x@failed"/>
               <entry key="x-dead-letter-routing-key" value="routing.es.app_data_x@failed"/>
               <entry key="x-message-ttl" value="1000" value-type="java.lang.long"/>
-          </rabbit:queue-arguments>
+          </rabbitmq:queue-arguments>
          -->
     </rabbit:queue>
     <rabbit:direct-exchange name="exchange.xml-hello" durable="true" auto-delete="false" delayed="true">

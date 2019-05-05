@@ -1,4 +1,4 @@
-package com.vergilyn.examples.consumer;
+package com.vergilyn.examples.rocketmq.consumer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.vergilyn.examples.RocketConstants;
+import com.vergilyn.examples.rocketmq.RocketConstants;
 
 import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;

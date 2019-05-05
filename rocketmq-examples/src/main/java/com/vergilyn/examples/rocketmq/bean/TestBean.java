@@ -1,4 +1,4 @@
-package com.vergilyn.examples.bean;
+package com.vergilyn.examples.rocketmq.bean;
 
 import java.util.Date;
 

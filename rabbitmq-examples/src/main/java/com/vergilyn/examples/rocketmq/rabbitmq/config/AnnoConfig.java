@@ -1,6 +1,6 @@
-package com.vergilyn.examples.rabbit.config;
+package com.vergilyn.examples.rocketmq.rabbitmq.config;
 
-import com.vergilyn.examples.rabbit.listener.ConsumerListener;
+import com.vergilyn.examples.rocketmq.rabbitmq.listener.ConsumerListener;
 
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Binding;
@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Profile;
 
 /**
  * @author VergiLyn
- * @blog http://www.cnblogs.com/VergiLyn/
  * @date 2018/9/14
  */
 @Configuration
