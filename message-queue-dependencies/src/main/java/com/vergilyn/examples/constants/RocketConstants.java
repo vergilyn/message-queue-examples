@@ -1,4 +1,4 @@
-package com.vergilyn.examples.rocketmq;
+package com.vergilyn.examples.constants;
 
 /**
  * @date 2019/1/31

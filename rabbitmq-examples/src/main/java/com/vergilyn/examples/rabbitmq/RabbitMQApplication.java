@@ -1,4 +1,4 @@
-package com.vergilyn.examples.rabbit;
+package com.vergilyn.examples.rabbitmq;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -6,16 +6,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author VergiLyn
- * @blog http://www.cnblogs.com/VergiLyn/
  * @date 2018/9/14
  */
 @SpringBootApplication
-public class HelloApplication implements CommandLineRunner {
+public class RabbitMQApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(HelloApplication.class);
-        // app.setAdditionalProfiles("xml");
-        app.setAdditionalProfiles("rabbit", "anno");
+        SpringApplication app = new SpringApplication(RabbitMQApplication.class);
+        // app.setAdditionalProfiles("xml");    // xml模式
+        app.setAdditionalProfiles("rabbitmq", "anno");  // 注解模式
+
         app.run(args);
     }
 

@@ -1,4 +1,4 @@
-package com.vergilyn.examples.rocketmq.rabbitmq.config;
+package com.vergilyn.examples.rabbitmq.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;

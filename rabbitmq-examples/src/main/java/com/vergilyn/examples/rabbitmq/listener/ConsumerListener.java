@@ -1,4 +1,4 @@
-package com.vergilyn.examples.rocketmq.rabbitmq.listener;
+package com.vergilyn.examples.rabbitmq.listener;
 
 import java.nio.charset.StandardCharsets;
 

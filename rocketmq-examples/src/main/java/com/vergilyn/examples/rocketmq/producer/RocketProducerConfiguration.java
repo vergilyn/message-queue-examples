@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.vergilyn.examples.rocketmq.RocketConstants;
-import com.vergilyn.examples.rocketmq.bean.TestBean;
+import com.vergilyn.examples.constants.RocketConstants;
+import com.vergilyn.examples.javabean.MessageDto;
 
 import org.apache.rocketmq.client.exception.MQBrokerException;
 import org.apache.rocketmq.client.exception.MQClientException;
@@ -23,10 +23,17 @@ public class RocketProducerConfiguration {
     private static final List<Message> messages = Lists.newArrayList();
     static {
         Message message;
-        for (Long i = 1L; i <= 100L; i++){
-            message = new Message(RocketConstants.MESSAGE_TOPIC, RocketConstants.MESSAGE_TAG, i + "", JSON.toJSONBytes(new TestBean(i, "user-" + i)));
+        MessageDto messageDto;
+
+        long index = 0L;
+        do {
+            messageDto = MessageDto.newInstance(index, "user-" + index);
+
+            message = new Message(RocketConstants.MESSAGE_TOPIC, RocketConstants.MESSAGE_TAG, index + "", JSON.toJSONBytes(messageDto));
+
             messages.add(message);
-        }
+            index ++;
+        }while (index < 100);
     }
 
     public void producer(){

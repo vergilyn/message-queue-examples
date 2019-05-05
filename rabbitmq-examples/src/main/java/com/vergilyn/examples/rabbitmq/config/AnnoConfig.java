@@ -1,6 +1,6 @@
-package com.vergilyn.examples.rocketmq.rabbitmq.config;
+package com.vergilyn.examples.rabbitmq.config;
 
-import com.vergilyn.examples.rocketmq.rabbitmq.listener.ConsumerListener;
+import com.vergilyn.examples.rabbitmq.listener.ConsumerListener;
 
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Binding;
