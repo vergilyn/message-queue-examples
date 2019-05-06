@@ -1,9 +1,11 @@
 package com.vergilyn.examples.javabean;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.vergilyn.examples.constants.MessageModeEnum;
 
 import lombok.Data;
 import org.apache.commons.lang3.RandomUtils;
@@ -13,13 +15,14 @@ import org.apache.commons.lang3.RandomUtils;
  * @date 2019-05-05
  */
 @Data
-public class MessageDto {
+public class MessageDto implements Serializable {
     private Long id;
     private Integer integer;
     private boolean bool;
     private String str;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date date;
+    private MessageModeEnum mode;
 
     private long timestamp;
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Profile;
  * @date 2018/9/17
  */
 @Configuration
-@ImportResource("classpath:/config/spring-rabbit-hello.xml")
+@ImportResource("classpath:/spring-rabbit-hello.xml")
 @Profile("xml")
 public class XmlConfig {
 }

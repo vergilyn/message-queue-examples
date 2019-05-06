@@ -14,7 +14,7 @@ public class RabbitMQApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(RabbitMQApplication.class);
         // app.setAdditionalProfiles("xml");    // xml模式
-        app.setAdditionalProfiles("rabbitmq", "anno");  // 注解模式
+        app.setAdditionalProfiles("rabbit", "anno");  // annotation模式
 
         app.run(args);
     }
