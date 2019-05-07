@@ -27,7 +27,10 @@ public class RocketProducerConfiguration {
 
         long index = 0L;
         do {
-            messageDto = MessageDto.newInstance(index, "user-" + index);
+            messageDto = MessageDto.Builder.newInstance()
+                            .id(index)
+                            .str("user-" + index)
+                            .build();
 
             message = new Message(RocketConstants.MESSAGE_TOPIC, RocketConstants.MESSAGE_TAG, index + "", JSON.toJSONBytes(messageDto));
 

@@ -1,11 +1,10 @@
 package com.vergilyn.examples.rabbitmq.config;
 
-import com.vergilyn.examples.constants.RabbitMQConstants;
+import com.vergilyn.examples.rabbitmq.constants.RabbitMQConstants;
 import com.vergilyn.examples.rabbitmq.listener.ConsumerListener;
 
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
@@ -13,40 +12,37 @@ import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 /**
  * @author VergiLyn
  * @date 2018/9/14
  */
 @Configuration
-@Profile("anno")
-public class AnnoConfig {
+public class AnnoConfiguration {
     @Autowired
     private ConsumerListener consumerListener;
 
-    @Bean
-    public Queue queue(){
-        return new Queue(RabbitMQConstants.ANNO_QUEUE);
+    @Bean("annoQueue")
+    public Queue annoQueue(){
+        return new Queue(RabbitMQConstants.ANNO.queue);
     }
 
-    @Bean
-    public Exchange exchange(){
-        return new DirectExchange(RabbitMQConstants.ANNO_EXCHANGE);
+    @Bean("annoExchange")
+    public Exchange annoExchange(){
+        return new DirectExchange(RabbitMQConstants.ANNO.exchange);
     }
 
     @Bean
     public Binding binding(){
         BindingBuilder.GenericArgumentsConfigurer configurer = BindingBuilder
-                .bind(this.queue())
-                .to(this.exchange())
-                .with(RabbitMQConstants.ANNO_ROUTING);
+                .bind(this.annoQueue())
+                .to(this.annoExchange())
+                .with(RabbitMQConstants.ANNO.routing);
         // configurer.and(Collections.emptyMap());
         return configurer.noargs();
     }
@@ -56,9 +52,9 @@ public class AnnoConfig {
      * @see org.springframework.amqp.rabbit.annotation.RabbitListener
      */
     @Bean
-    public MessageListenerContainer bindMessageListener(ConnectionFactory connectionFactory){
+    public MessageListenerContainer annoMessageListener(ConnectionFactory connectionFactory){
         SimpleMessageListenerContainer listener = new SimpleMessageListenerContainer(connectionFactory);
-        listener.setQueues(this.queue());   // 需要监听的队列
+        listener.setQueues(this.annoQueue());   // 需要监听的队列
         listener.setAcknowledgeMode(AcknowledgeMode.MANUAL);  // 手动应答模式
         // listener.setMaxConcurrentConsumers();
         // listener.setConcurrentConsumers();
@@ -70,17 +66,10 @@ public class AnnoConfig {
         return listener;
     }
 
-    @Bean
-    public AmqpAdmin amqpAdmin(ConnectionFactory connectionFactory){
-        AmqpAdmin admin = new RabbitAdmin(connectionFactory);
-        admin.declareQueue(queue());
-        admin.declareQueue(new Queue(RabbitMQConstants.XML_QUEUE));
-
+    @Bean("annoAmqpAdmin")
+    public AmqpAdmin annoAmqpAdmin(ConnectionFactory connectionFactory){
+        RabbitAdmin admin = new RabbitAdmin(connectionFactory);
+        admin.declareQueue(annoQueue());
         return admin;
-    }
-
-    @Bean
-    public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory){
-        return new RabbitTemplate(connectionFactory);
     }
 }

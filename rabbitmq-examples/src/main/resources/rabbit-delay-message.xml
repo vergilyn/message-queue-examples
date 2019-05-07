@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+            http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd"
+       default-autowire="byName">
+
+    <description>
+        参考：
+        - https://docs.spring.io/spring-amqp/reference/htmlsingle/
+        - （实现延时重试队列） https://www.cnblogs.com/itrena/p/9044097.html
+        - (RabbitMQ和Spring的整合) https://www.cnblogs.com/s648667069/p/6401463.html
+        - RabbitMQ防止消息丢失: http://www.cnblogs.com/Leo_wl/p/6581989.html
+        - （rabbit 3.5.8+支持）延时消息队列插件: https://github.com/rabbitmq/rabbitmq-delayed-message-exchange
+
+        主要：
+        - durable：true, rabbitMQ持久化
+        - RabbitMQ不允许对一个已经存在的队列用不同的参数重新声明，试图这么做时会抛exception。所以，改动之前代码之前，要在控制台中把原来的队列删除
+        - acknowledge: none、auto、manual(手动确认); 区别参考 org.springframework.amqp.core.AcknowledgeMode
+
+        FIXME:
+        1. xml管理queue、exchange、routing的"name"并不是很理想，因为java常量中也会重复定义一次。又不想定义在properties中，用`${...}`占位。
+        想达到的形式："*-name"定义在java常量，然后xml中引用。
+    </description>
+
+    <context:property-placeholder ignore-resource-not-found="false" location="classpath*:application-rabbit.properties" />
+
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
+
+    <!--配置connection-factory，指定连接rabbit server参数 -->
+    <rabbit:connection-factory
+            id="connectionFactory"
+            host="${spring.rabbitmq.host}"
+            port="${spring.rabbitmq.port}"
+            username="${spring.rabbitmq.username}"
+            password="${spring.rabbitmq.password}"
+            virtual-host="${spring.rabbitmq.virtual-host}"
+            channel-cache-size="${spring.rabbitmq.cache.channel.size}"
+            requested-heartbeat="${spring.rabbitmq.requested-heartbeat}"
+    />
+
+    <!--定义rabbit template用于数据的接收和发送 -->
+    <!--<rabbit:template id="amqpTemplate" connection-factory="connectionFactory" message-converter="jsonMessageConverter"/>-->
+
+    <!-- 通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
+    <rabbit:admin id="delayRabbitAdmin" connection-factory="connectionFactory"/>
+
+    <!-- (producer) main-queue主消息队列， 若处理失败，且允许retry，则将消息推送到queue.es.app_data_x@retry；
+        否则记录database/failed-queue  -->
+    <rabbit:queue name="queue.delay-message" durable="true" auto-delete="false" exclusive="false" >
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="exchange.delay-message@failed"/>
+            <entry key="x-dead-letter-routing-key" value="routing.delay-message@failed"/>
+            <!--<entry key="x-message-ttl" value="1000" value-type="java.lang.long"/>-->
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:direct-exchange name="exchange.delay-message" durable="true" auto-delete="false" delayed="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue.delay-message" key="routing.delay-message"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- (consumer) 观察-监听模式 当有消息到达时会通知监听在对应的队列上的监听对象-->
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
+        <rabbit:listener queues="queue.delay-message" ref="consumerListener"/>
+    </rabbit:listener-container>
+
+
+    <!-- (producer)retry-queue：延迟5min，将消息放入dead-letter（即重新发送到main-queue） -->
+    <rabbit:queue name="queue.delay-message@retry" durable="true" auto-delete="false" exclusive="false">
+        <rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="exchange.delay-message"/>
+            <entry key="x-dead-letter-routing-key" value="routing.delay-message"/>
+            <entry key="x-message-ttl">
+                <value type="java.lang.Long">${spring.rabbitmq.x-message-ttl}</value>
+            </entry>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
+    <rabbit:direct-exchange name="exchange.delay-message@retry" durable="true" auto-delete="false" delayed="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue.delay-message@retry" key="routing.delay-message@retry"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+
+    <!-- (producer)死信队列：failed-queue   -->
+    <rabbit:queue name="queue.delay-message@failed" durable="true" auto-delete="false" exclusive="false"/>
+    <rabbit:direct-exchange name="exchange.delay-message@failed" durable="true" auto-delete="false" >
+        <rabbit:bindings>
+            <rabbit:binding queue="queue.delay-message@failed" key="routing.delay-message@failed"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+</beans>

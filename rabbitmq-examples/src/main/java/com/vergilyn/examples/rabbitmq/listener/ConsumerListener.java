@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
 import com.vergilyn.examples.constants.MessageModeEnum;
 import com.vergilyn.examples.javabean.MessageDto;
+import com.vergilyn.examples.javabean.RabbitMode;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -36,23 +37,23 @@ public class ConsumerListener implements ChannelAwareMessageListener {
         long deliveryTag = properties.getDeliveryTag();
         String body = new String(message.getBody(), StandardCharsets.UTF_8);
         MessageDto messageDto = JSON.parseObject(body, MessageDto.class);
+        RabbitMode rabbitMode = messageDto.getRabbitMode();
 
         log.info("consumer-queue >>>> {}, body: {}", properties.getConsumerQueue(), body);
 
-        if (messageDto.getMode() == MessageModeEnum.RABBIT_ACK){
-            channel.basicAck(deliveryTag, false);
+        if (rabbitMode.getMode() == MessageModeEnum.RABBIT_ACK){
+            channel.basicAck(deliveryTag, rabbitMode.isMultiple());
 
-        }else if(messageDto.getMode() == MessageModeEnum.RABBIT_REJECT){
+        }else if(rabbitMode.getMode() == MessageModeEnum.RABBIT_REJECT){
             // 2. 拒绝单条消息：true, 被拒绝的消息重新排队（更靠近"队首"，而不是"队尾"）；false，消息被丢弃discard，或加入死信队列dead-letter
-            channel.basicReject(deliveryTag, false);
+            channel.basicReject(deliveryTag, rabbitMode.isRequeue());
 
-        }else if(messageDto.getMode() == MessageModeEnum.RABBIT_NACK){
+        }else if(rabbitMode.getMode() == MessageModeEnum.RABBIT_NACK){
             // 3. nack支持批量拒绝
-            channel.basicNack(deliveryTag, false, false);
+            channel.basicNack(deliveryTag, rabbitMode.isMultiple(), rabbitMode.isRequeue());
 
         }else {
-            channel.basicAck(deliveryTag, false);
+            channel.basicAck(deliveryTag, rabbitMode.isMultiple());
         }
-
     }
 }
