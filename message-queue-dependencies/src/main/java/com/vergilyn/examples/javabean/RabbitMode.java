@@ -15,4 +15,5 @@ public class RabbitMode implements Serializable {
     private boolean multiple;
     private boolean requeue;
     private MessageModeEnum mode;
+    private boolean consumerError = false;
 }

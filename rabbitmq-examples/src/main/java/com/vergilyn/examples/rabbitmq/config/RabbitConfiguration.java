@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RabbitConfiguration {
-
     @Bean
     @ConditionalOnMissingBean
     public AmqpTemplate amqpTemplate(ConnectionFactory connectionFactory){

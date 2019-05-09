@@ -11,7 +11,8 @@
     <context:property-placeholder ignore-resource-not-found="false" location="classpath*:application-rabbit.properties" />
 
     <!-- spring-xml配置连接 -->
-    <rabbit:connection-factory
+    <!--
+        <rabbit:connection-factory
             id="connectionFactory"
             host="${spring.rabbitmq.host}"
             port="${spring.rabbitmq.port}"
@@ -20,12 +21,13 @@
             virtual-host="${spring.rabbitmq.virtual-host}"
             channel-cache-size="${spring.rabbitmq.cache.channel.size}"
             requested-heartbeat="${spring.rabbitmq.requested-heartbeat}"
-    />
+        />
+    -->
     <!--<rabbit:template id="amqpTemplate"  encoding="UTF-8" connection-factory="connectionFactory" />-->
 
-    <rabbit:admin id="xmlRabbitAdmin" connection-factory="connectionFactory"/>
+    <rabbit:admin id="xmlAmqpAdmin" connection-factory="rabbitConnectionFactory"/>
 
-    <rabbit:queue name="queue.xml-hello" durable="true" auto-delete="false" exclusive="false" >
+    <rabbit:queue name="queue.xml-hello" declared-by="xmlAmqpAdmin" durable="true" auto-delete="false" exclusive="false" >
         <!--
         <rabbit:queue-arguments>
             <entry key="x-dead-letter-exchange" value="exchange.es.app_data_x@failed"/>
@@ -35,13 +37,13 @@
        -->
     </rabbit:queue>
 
-    <rabbit:direct-exchange name="exchange.xml-hello" durable="true" auto-delete="false" delayed="true">
+    <rabbit:direct-exchange name="exchange.xml-hello" auto-declare="true" declared-by="xmlAmqpAdmin" durable="true" auto-delete="false" delayed="true">
         <rabbit:bindings>
             <rabbit:binding queue="queue.xml-hello" key="routing.xml-hello"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
+    <rabbit:listener-container connection-factory="rabbitConnectionFactory" acknowledge="manual">
         <rabbit:listener queues="queue.xml-hello" ref="consumerListener"/>
     </rabbit:listener-container>
 

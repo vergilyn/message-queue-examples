@@ -23,7 +23,7 @@ public class RabbitMQProducerTest {
     private AmqpTemplate amqpTemplate;
 
     @Test
-    public void annoProducer(){
+    public void anno(){
         MessageDto messageDto = MessageDto.Builder.newInstance()
                 .id(1L)
                 .rabbitMode(MessageModeEnum.RABBIT_ACK)
@@ -33,7 +33,7 @@ public class RabbitMQProducerTest {
     }
 
     @Test
-    public void xmlProducer(){
+    public void xml(){
         MessageDto messageDto = MessageDto.Builder.newInstance()
                 .id(2L)
                 .rabbitMode(MessageModeEnum.RABBIT_ACK)
@@ -41,5 +41,16 @@ public class RabbitMQProducerTest {
                 .build();
 
         amqpTemplate.convertAndSend(RabbitMQConstants.XML.exchange, RabbitMQConstants.XML.routing, JSON.toJSONString(messageDto));
+    }
+
+    @Test
+    public void delayMessage(){
+        MessageDto messageDto = MessageDto.Builder.newInstance()
+                .id(3L)
+                .rabbitConsumerError(true)
+                .build();
+
+        amqpTemplate.convertAndSend(RabbitMQConstants.DELAY.exchange, RabbitMQConstants.DELAY.routing, JSON.toJSONString(messageDto));
+
     }
 }

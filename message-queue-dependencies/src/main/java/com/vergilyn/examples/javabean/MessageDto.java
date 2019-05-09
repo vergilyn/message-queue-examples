@@ -7,12 +7,14 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.vergilyn.examples.constants.MessageModeEnum;
 
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * @author VergiLyn
  * @date 2019-05-05
  */
 @Data
+@ToString
 public class MessageDto implements Serializable {
     private Long id;
     private Integer integer;
@@ -80,6 +82,11 @@ public class MessageDto implements Serializable {
 
         public Builder rabbitMode(MessageModeEnum mode) {
             this.rabbitMode.setMode(mode);
+            return this;
+        }
+
+        public Builder rabbitConsumerError(boolean consumerError) {
+            this.rabbitMode.setConsumerError(consumerError);
             return this;
         }
 

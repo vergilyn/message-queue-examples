@@ -9,6 +9,6 @@ import org.springframework.context.annotation.ImportResource;
  */
 @Configuration
 @ImportResource("classpath:/rabbit-delay-message.xml")
-public class DelayConfiguration {
+public class DelayMessageConfiguration {
 }
 
