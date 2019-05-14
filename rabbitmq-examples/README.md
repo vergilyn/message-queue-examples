@@ -11,6 +11,7 @@
 [RabbitMQ发布订阅实战-实现延时重试队列]: https://www.cnblogs.com/itrena/p/9044097.html
 
 blog参考:
+- [RabbitMQ中 exchange、route、queue的关系](https://www.cnblogs.com/linkenpark/p/5393666.html)
 - [rabbit基础知识](https://blog.csdn.net/dreamchasering/article/details/77653512)
 - [rabbit queue-arguments 含义](https://blog.csdn.net/qq_26656329/article/details/77891793)
 - [exchange-type: topic、direct、fanout](https://blog.csdn.net/ww130929/article/details/72842234)
@@ -93,6 +94,7 @@ rabbitMQ可以针对queue，或者具体的message设置TTL `x-message-ttl`。
 
 ## vhost、exchange、queue
 [RabbitMQ的Vhost，Exchange，Queue原理分析](https://www.cnblogs.com/zhengchunyuan/p/9253725.html)
+[RabbitMQ中 exchange、route、queue的关系](https://www.cnblogs.com/linkenpark/p/5393666.html)
 
 ## 实际中遇到的问题
 1. java.net.SocketException: socket closed

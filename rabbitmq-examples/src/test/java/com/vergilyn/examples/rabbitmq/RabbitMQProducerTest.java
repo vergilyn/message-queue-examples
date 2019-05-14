@@ -3,7 +3,7 @@ package com.vergilyn.examples.rabbitmq;
 import com.alibaba.fastjson.JSON;
 import com.vergilyn.examples.constants.MessageModeEnum;
 import com.vergilyn.examples.javabean.MessageDto;
-import com.vergilyn.examples.rabbitmq.constants.RabbitMQConstants;
+import com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +29,7 @@ public class RabbitMQProducerTest {
                 .rabbitMode(MessageModeEnum.RABBIT_ACK)
                 .build();
 
-        amqpTemplate.convertAndSend(RabbitMQConstants.ANNO.exchange, RabbitMQConstants.ANNO.routing, JSON.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.ANNO.exchange, RabbitDefinedEnum.ANNO.routing, JSON.toJSONString(messageDto));
     }
 
     @Test
@@ -40,7 +40,7 @@ public class RabbitMQProducerTest {
                 .rabbitRequeue(true)
                 .build();
 
-        amqpTemplate.convertAndSend(RabbitMQConstants.XML.exchange, RabbitMQConstants.XML.routing, JSON.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.XML.exchange, RabbitDefinedEnum.XML.routing, JSON.toJSONString(messageDto));
     }
 
     @Test
@@ -50,7 +50,18 @@ public class RabbitMQProducerTest {
                 .rabbitConsumerError(true)
                 .build();
 
-        amqpTemplate.convertAndSend(RabbitMQConstants.DELAY.exchange, RabbitMQConstants.DELAY.routing, JSON.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.DELAY.exchange, RabbitDefinedEnum.DELAY.routing, JSON.toJSONString(messageDto));
+
+    }
+
+    @Test
+    public void uniConcurrency(){
+        MessageDto messageDto = MessageDto.Builder.newInstance()
+                .id(4L)
+                .str("uni-concurrency")
+                .build();
+
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.CONCURRENCY_UNI.exchange, RabbitDefinedEnum.CONCURRENCY_UNI.routing, JSON.toJSONString(messageDto));
 
     }
 }

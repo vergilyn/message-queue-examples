@@ -1,5 +1,6 @@
 package com.vergilyn.examples.rabbitmq;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2018/9/14
  */
 @SpringBootApplication
+@EnableRabbit
 public class RabbitMQApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

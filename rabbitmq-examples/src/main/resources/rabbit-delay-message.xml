@@ -47,7 +47,7 @@
     <!--<rabbit:template id="amqpTemplate" connection-factory="connectionFactory" message-converter="jsonMessageConverter"/>-->
 
     <!-- 通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
-    <rabbit:admin id="delayRabbitAdmin" connection-factory="rabbitConnectionFactory"/>
+    <!--<rabbit:admin id="delayRabbitAdmin" connection-factory="rabbitConnectionFactory"/>-->
 
     <!-- (producer) main-queue主消息队列，
         若处理失败，且允许retry，则将消息推送到queue.es.app_data_x@retry；

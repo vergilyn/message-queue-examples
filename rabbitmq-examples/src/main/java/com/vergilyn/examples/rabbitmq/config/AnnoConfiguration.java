@@ -1,17 +1,18 @@
 package com.vergilyn.examples.rabbitmq.config;
 
-import com.vergilyn.examples.rabbitmq.constants.RabbitMQConstants;
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+import com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum;
 import com.vergilyn.examples.rabbitmq.listener.ConsumerListener;
 
 import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +30,24 @@ public class AnnoConfiguration {
 
     @Bean("annoQueue")
     public Queue annoQueue(){
-        return new Queue(RabbitMQConstants.ANNO.queue);
+        return new Queue(RabbitDefinedEnum.ANNO.queue);
     }
 
+    /* type: x-delayed-message
+     * DM: message-delayed:0
+     * args: x-delayed-type:direct
+     *
+     * 最终rabbitmq的type: x-delayed-message
+     */
     @Bean("annoExchange")
     public Exchange annoExchange(){
-        return new DirectExchange(RabbitMQConstants.ANNO.exchange);
+        Map<String, Object> arguments = Maps.newHashMap();
+        arguments.put("x-delayed-type", "direct");
+
+        DirectExchange exchange = new DirectExchange(RabbitDefinedEnum.ANNO.exchange, true, false, arguments);
+        exchange.setDelayed(true);  // false: 最终并不会是x-delayed-message，而是direct
+
+        return exchange;
     }
 
     @Bean
@@ -42,7 +55,7 @@ public class AnnoConfiguration {
         BindingBuilder.GenericArgumentsConfigurer configurer = BindingBuilder
                 .bind(this.annoQueue())
                 .to(this.annoExchange())
-                .with(RabbitMQConstants.ANNO.routing);
+                .with(RabbitDefinedEnum.ANNO.routing);
         // configurer.and(Collections.emptyMap());
         return configurer.noargs();
     }
@@ -64,12 +77,5 @@ public class AnnoConfiguration {
         // listener.setMessageListener(new ConsumerListener());    // 可能需要这么写，或用@RabbitListener实现
 
         return listener;
-    }
-
-    @Bean("annoAmqpAdmin")
-    public AmqpAdmin annoAmqpAdmin(ConnectionFactory connectionFactory){
-        RabbitAdmin admin = new RabbitAdmin(connectionFactory);
-        admin.declareQueue(annoQueue());
-        return admin;
     }
 }

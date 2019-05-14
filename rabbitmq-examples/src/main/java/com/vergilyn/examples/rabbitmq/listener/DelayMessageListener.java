@@ -3,7 +3,7 @@ package com.vergilyn.examples.rabbitmq.listener;
 import com.rabbitmq.client.Channel;
 import com.vergilyn.examples.javabean.MessageDto;
 import com.vergilyn.examples.javabean.RabbitMode;
-import com.vergilyn.examples.rabbitmq.constants.RabbitMQConstants;
+import com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum;
 import com.vergilyn.examples.util.RabbitMessageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +35,8 @@ public class DelayMessageListener implements ChannelAwareMessageListener {
         if (rabbitMode.isConsumerError() && retryCount < MAX_RETRY_TIMES){
 
             // 先推送到retry-queue
-            channel.basicPublish(RabbitMQConstants.DELAY_RETRY.exchange,
-                    RabbitMQConstants.DELAY_RETRY.routing,
+            channel.basicPublish(RabbitDefinedEnum.DELAY_RETRY.exchange,
+                    RabbitDefinedEnum.DELAY_RETRY.routing,
                     RabbitMessageUtils.fromMessageProperties(message),
                     message.getBody());
 

@@ -25,19 +25,17 @@
     -->
     <!--<rabbit:template id="amqpTemplate"  encoding="UTF-8" connection-factory="connectionFactory" />-->
 
-    <rabbit:admin id="xmlAmqpAdmin" connection-factory="rabbitConnectionFactory"/>
+    <!--<rabbit:admin id="xmlAmqpAdmin" connection-factory="rabbitConnectionFactory"/>-->
 
-    <rabbit:queue name="queue.xml-hello" declared-by="xmlAmqpAdmin" durable="true" auto-delete="false" exclusive="false" >
-        <!--
-        <rabbit:queue-arguments>
-            <entry key="x-dead-letter-exchange" value="exchange.es.app_data_x@failed"/>
-            <entry key="x-dead-letter-routing-key" value="routing.es.app_data_x@failed"/>
+    <rabbit:queue name="queue.xml-hello" durable="true" auto-delete="false" exclusive="false" >
+        <!--<rabbit:queue-arguments>
+            <entry key="x-dead-letter-exchange" value="exchange@failed"/>
+            <entry key="x-dead-letter-routing-key" value="routing@failed"/>
             <entry key="x-message-ttl" value="1000" value-type="java.lang.long"/>
-        </rabbit:queue-arguments>
-       -->
+        </rabbit:queue-arguments>-->
     </rabbit:queue>
 
-    <rabbit:direct-exchange name="exchange.xml-hello" auto-declare="true" declared-by="xmlAmqpAdmin" durable="true" auto-delete="false" delayed="true">
+    <rabbit:direct-exchange name="exchange.xml-hello" auto-declare="true" durable="true" auto-delete="false" delayed="true">
         <rabbit:bindings>
             <rabbit:binding queue="queue.xml-hello" key="routing.xml-hello"/>
         </rabbit:bindings>
