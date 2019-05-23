@@ -1,15 +1,18 @@
 package com.vergilyn.examples.rabbitmq;
 
+import java.util.stream.Stream;
+
 import com.alibaba.fastjson.JSON;
 import com.vergilyn.examples.constants.MessageModeEnum;
 import com.vergilyn.examples.javabean.MessageDto;
 import com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -17,10 +20,19 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @date 2019-05-06
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = RabbitMQApplication.class)
+// @SpringBootTest(classes = RabbitMQApplication.class)
 public class RabbitMQProducerTest {
-    @Autowired
     private AmqpTemplate amqpTemplate;
+
+    @Before
+    public void before(){
+        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("127.0.0.1", 5672);
+        connectionFactory.setUsername("admin");
+        connectionFactory.setPassword("123456");
+
+        amqpTemplate = new RabbitTemplate(connectionFactory);
+    }
+
 
     @Test
     public void anno(){
@@ -56,12 +68,22 @@ public class RabbitMQProducerTest {
 
     @Test
     public void uniConcurrency(){
-        MessageDto messageDto = MessageDto.Builder.newInstance()
-                .id(4L)
-                .str("uni-concurrency")
-                .build();
+        int[] index = {0};
 
-        amqpTemplate.convertAndSend(RabbitDefinedEnum.CONCURRENCY_UNI.exchange, RabbitDefinedEnum.CONCURRENCY_UNI.routing, JSON.toJSONString(messageDto));
+        Stream.generate(() -> {
+                MessageDto body = MessageDto.Builder.newInstance()
+                        .id(4L)
+                        .integer(index[0])
+                        .build();
+                index[0] = index[0] + 1;
+
+            return body;
+        }).limit(10)
+        .forEach(e -> {
+            String body = JSON.toJSONString(e);
+            System.out.println(body);
+            amqpTemplate.convertAndSend(RabbitDefinedEnum.CONCURRENCY_UNI.exchange, RabbitDefinedEnum.CONCURRENCY_UNI.routing, body);
+        });
 
     }
 }

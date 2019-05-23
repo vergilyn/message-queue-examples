@@ -28,7 +28,7 @@ public class UniConcurrencyListener {
     /**
      * <pre>
      *   @RabbitHandler
-     *   public void error(Message message, Channel channel) {
+     *   public void listener(Message message, Channel channel) {
      *     // ...
      *   }
      * </pre>
@@ -44,7 +44,7 @@ public class UniConcurrencyListener {
         log.info("consumer-queue >>>> {}, body: {}", message.getMessageProperties().getConsumerQueue(), RabbitMessageUtils.parseObject(message));
 
         try {
-            Thread.sleep( 60 * 1000L);
+            Thread.sleep( 20 * 1000L);
 
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (InterruptedException e) {

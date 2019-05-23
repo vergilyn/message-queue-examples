@@ -139,6 +139,9 @@ blog: [RabbitMQ发布订阅实战-实现延时重试队列]
 设计思路 >>>>
 ![delay-message-queue.png](../docs/images/delay-message-queue.png)
 
+3. 配置项含义
+[MQ中间件-rabbitmq-connection以及channel的思考（连接池）](https://blog.csdn.net/weixin_34281477/article/details/88434772)
+
 ## 参考
 
 一般功能代码参考 >>>>
