@@ -12,6 +12,7 @@
         <module>rabbitmq-examples</module>
         <module>rocketmq-examples</module>
         <module>message-queue-dependencies</module>
+        <module>jvm-disruptor-examples</module>
     </modules>
 
     <repositories>
