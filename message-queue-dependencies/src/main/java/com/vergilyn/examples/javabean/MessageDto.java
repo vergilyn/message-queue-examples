@@ -3,7 +3,7 @@ package com.vergilyn.examples.javabean;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vergilyn.examples.constants.MessageModeEnum;
 
 import lombok.Data;
@@ -20,7 +20,7 @@ public class MessageDto implements Serializable {
     private Integer integer;
     private boolean bool;
     private String str;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date date;
     private RabbitMode rabbitMode;
 
@@ -36,7 +36,7 @@ public class MessageDto implements Serializable {
         private boolean bool;
         private String str;
         private Date date;
-        private RabbitMode rabbitMode = new RabbitMode();
+        private final RabbitMode rabbitMode = new RabbitMode();
 
         private Builder() {
         }

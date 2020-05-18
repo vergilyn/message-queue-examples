@@ -2,10 +2,12 @@ package com.vergilyn.examples.rabbitmq;
 
 import java.util.stream.Stream;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vergilyn.examples.constants.MessageModeEnum;
 import com.vergilyn.examples.javabean.MessageDto;
 import com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum;
+import com.vergilyn.examples.util.DefaultObjectMapper;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 // @SpringBootTest(classes = RabbitMQApplication.class)
 public class RabbitMQProducerTest {
+    private static final ObjectMapper OBJECT_MAPPER = DefaultObjectMapper.getInstance();
     private AmqpTemplate amqpTemplate;
 
     @Before
@@ -35,13 +38,13 @@ public class RabbitMQProducerTest {
 
 
     @Test
-    public void anno(){
+    public void anno() throws JsonProcessingException {
         MessageDto messageDto = MessageDto.Builder.newInstance()
                 .id(1L)
                 .rabbitMode(MessageModeEnum.RABBIT_ACK)
                 .build();
 
-        amqpTemplate.convertAndSend(RabbitDefinedEnum.ANNO.exchange, RabbitDefinedEnum.ANNO.routing, JSON.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.ANNO.exchange, RabbitDefinedEnum.ANNO.routing, DefaultObjectMapper.writeValueAsString(messageDto));
     }
 
     @Test
@@ -52,7 +55,7 @@ public class RabbitMQProducerTest {
                 .rabbitRequeue(true)
                 .build();
 
-        amqpTemplate.convertAndSend(RabbitDefinedEnum.XML.exchange, RabbitDefinedEnum.XML.routing, JSON.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.XML.exchange, RabbitDefinedEnum.XML.routing, DefaultObjectMapper.writeValueAsString(messageDto));
     }
 
     @Test
@@ -62,7 +65,7 @@ public class RabbitMQProducerTest {
                 .rabbitConsumerError(true)
                 .build();
 
-        amqpTemplate.convertAndSend(RabbitDefinedEnum.DELAY.exchange, RabbitDefinedEnum.DELAY.routing, JSON.toJSONString(messageDto));
+        amqpTemplate.convertAndSend(RabbitDefinedEnum.DELAY.exchange, RabbitDefinedEnum.DELAY.routing, DefaultObjectMapper.writeValueAsString(messageDto));
 
     }
 
@@ -80,7 +83,7 @@ public class RabbitMQProducerTest {
             return body;
         }).limit(10)
         .forEach(e -> {
-            String body = JSON.toJSONString(e);
+            String body = DefaultObjectMapper.writeValueAsString(e);
             System.out.println(body);
             amqpTemplate.convertAndSend(RabbitDefinedEnum.CONCURRENCY_UNI.exchange, RabbitDefinedEnum.CONCURRENCY_UNI.routing, body);
         });

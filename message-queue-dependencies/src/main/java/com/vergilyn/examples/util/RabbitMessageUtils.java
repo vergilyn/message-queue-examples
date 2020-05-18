@@ -5,7 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.AMQP;
 import com.vergilyn.examples.javabean.MessageDto;
 
@@ -29,7 +28,7 @@ public class RabbitMessageUtils {
     }
 
     public static MessageDto parseObject(String messageBody){
-        return JSON.parseObject(messageBody, MessageDto.class);
+        return DefaultObjectMapper.readValue(messageBody, MessageDto.class);
     }
 
 
@@ -38,7 +37,7 @@ public class RabbitMessageUtils {
     }
 
     public static List<MessageDto> parseArray(String messageBody){
-        return JSON.parseArray(messageBody, MessageDto.class);
+        return DefaultObjectMapper.readValueAsList(messageBody, MessageDto.class);
     }
 
     public static int retryCount(Message message){
