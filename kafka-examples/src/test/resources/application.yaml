@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: vergilyn-kafka-application-test

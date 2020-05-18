@@ -1,0 +1,8 @@
+spring:
+  kafka:
+    consumer:
+      enable-auto-commit: true
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

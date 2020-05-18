@@ -1,0 +1,3 @@
+[submodule "spring-kafka-official-sample"]
+	path = spring-kafka-official-sample
+	url = https://github.com/spring-projects/spring-kafka.git

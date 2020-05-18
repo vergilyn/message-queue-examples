@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: vergilyn-kafka-application
+
+  profiles:
+    active:
+      - kafka

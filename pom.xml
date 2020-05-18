@@ -14,6 +14,7 @@
         <module>rocketmq-examples</module>
         <module>message-queue-dependencies</module>
         <module>jvm-disruptor-examples</module>
+        <module>kafka-examples</module>
     </modules>
 
     <repositories>
@@ -32,7 +33,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <spring-boot-dependencies.version>2.2.2.RELEASE</spring-boot-dependencies.version>
+        <spring-boot-dependencies.version>2.2.6.RELEASE</spring-boot-dependencies.version>
 
         <projectlombok.version>1.18.10</projectlombok.version>
         <google-guava.version>28.2-jre</google-guava.version>
