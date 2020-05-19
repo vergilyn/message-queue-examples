@@ -1,6 +1,8 @@
 package org.apache.kafka.common.requests;
 
 /**
+ * compatible spring-kafka v2.5
+ *
  * @author vergilyn
  * @date 2020-05-18
  *
