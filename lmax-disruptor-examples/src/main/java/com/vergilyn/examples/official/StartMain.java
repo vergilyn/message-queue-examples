@@ -2,6 +2,7 @@ package com.vergilyn.examples.official;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
@@ -43,7 +44,8 @@ public class StartMain {
             ringBuffer.publish(sequence);//发布事件；
         }
 
-        Thread.sleep(1000000);
+        TimeUnit.SECONDS.sleep(1_000);
+
         disruptor.shutdown();//关闭 disruptor，方法会堵塞，直至所有的事件都得到处理；
         executor.shutdown();//关闭 disruptor 使用的线程池；如果需要的话，必须手动关闭， disruptor 在 shutdown 时不会自动关闭；
     }

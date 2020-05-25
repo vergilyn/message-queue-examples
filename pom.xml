@@ -12,8 +12,8 @@
     <modules>
         <module>rabbitmq-examples</module>
         <module>rocketmq-examples</module>
-        <module>message-queue-dependencies</module>
-        <module>jvm-disruptor-examples</module>
+        <module>mq-common-dependencies</module>
+        <module>lmax-disruptor-examples</module>
         <module>kafka-examples</module>
     </modules>
 

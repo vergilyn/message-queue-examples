@@ -23,7 +23,7 @@
 
         <dependency>
             <groupId>com.vergilyn.examples</groupId>
-            <artifactId>message-queue-dependencies</artifactId>
+            <artifactId>mq-common-dependencies</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

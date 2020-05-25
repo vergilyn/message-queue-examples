@@ -7,6 +7,7 @@ import com.lmax.disruptor.EventHandler;
  * @date 2019-06-27
  */
 public class LongEventHandler implements EventHandler<LongEvent> {
+    @Override
     public void onEvent(LongEvent event, long sequence, boolean endOfBatch) {
         System.out.println("Event: " + event);
         System.out.println();
