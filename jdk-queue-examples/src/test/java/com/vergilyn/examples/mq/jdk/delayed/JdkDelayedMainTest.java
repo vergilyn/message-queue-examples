@@ -13,6 +13,8 @@ import com.vergilyn.examples.util.DefaultObjectMapper;
  * <p>队列中可以放基本数据类型或自定义实体类，在存放基本数据类型时，优先队列中元素默认升序排列，自定义实体类就需要我们根据类属性值比较计算了。
  * @author vergilyn
  * @date 2020-05-25
+ *
+ * @see io.netty.util.concurrent.ScheduledFutureTask
  */
 public class JdkDelayedMainTest {
 

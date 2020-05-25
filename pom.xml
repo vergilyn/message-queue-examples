@@ -16,6 +16,7 @@
         <module>lmax-disruptor-examples</module>
         <module>kafka-examples</module>
         <module>jdk-queue-examples</module>
+        <module>netty-task-examples</module>
     </modules>
 
     <repositories>
