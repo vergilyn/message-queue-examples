@@ -15,6 +15,7 @@
         <module>mq-common-dependencies</module>
         <module>lmax-disruptor-examples</module>
         <module>kafka-examples</module>
+        <module>jdk-queue-examples</module>
     </modules>
 
     <repositories>
@@ -94,6 +95,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.vergilyn.examples</groupId>
+            <artifactId>mq-common-dependencies</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

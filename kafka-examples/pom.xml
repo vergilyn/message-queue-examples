@@ -53,17 +53,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
             <version>${apache-kafka.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.vergilyn.examples</groupId>
-            <artifactId>mq-common-dependencies</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>
