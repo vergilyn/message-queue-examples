@@ -11,11 +11,24 @@
 [RabbitMQ发布订阅实战-实现延时重试队列]: https://www.cnblogs.com/itrena/p/9044097.html
 
 blog参考:
-- [RabbitMQ中 exchange、route、queue的关系](https://www.cnblogs.com/linkenpark/p/5393666.html)
 - [rabbit基础知识](https://blog.csdn.net/dreamchasering/article/details/77653512)
+- [RabbitMQ中 exchange、route、queue的关系](https://www.cnblogs.com/linkenpark/p/5393666.html)
+- [提升RabbitMQ消费速度的一些实践](https://www.cnblogs.com/bossma/p/practices-on-improving-the-speed-of-rabbitmq-consumption.html)
 - [rabbit queue-arguments 含义](https://blog.csdn.net/qq_26656329/article/details/77891793)
 - [exchange-type: topic、direct、fanout](https://blog.csdn.net/ww130929/article/details/72842234)
 - [Spring 集成 RabbitMQ 与其概念，消息持久化，ACK机制](https://blog.csdn.net/u012129558/article/details/79530653)
+
+## 概念
+### exchange-type, binding-key, routing-key
+在绑定（Binding）Exchange与Queue的同时，一般会指定一个binding-key。在绑定多个Queue到同一个Exchange的时候，这些Binding允许使用相同的binding key。
+
+生产者在将消息发送给Exchange的时候，一般会指定一个routing key，来指定这个消息的路由规则，生产者就可以在发送消息给Exchange时，通过指定routing key来决定消息流向哪里。
+
+RabbitMQ常用的Exchange Type有三种：fanout、direct、topic。
+
+**fanout:** 把所有发送到该Exchange的消息投递到所有与它绑定的队列中。  
+**direct:** 把消息投递到那些binding key与routing key完全匹配的队列中。  
+**topic:** 将消息路由到binding key与routing key模式匹配的队列中。  
 
 ## 安装
 [windows下 安装 rabbitMQ 及操作常用命令](https://www.cnblogs.com/ericli-ericli/p/5902270.html)：rabbitMQ服务，及可视化管理控制台。

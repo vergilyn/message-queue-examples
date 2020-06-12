@@ -14,6 +14,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ContainerFactoryConfiguration {
 
+    @Bean("batchRabbitListenerContainerFactory")
+    public SimpleRabbitListenerContainerFactory batchRabbitListenerContainerFactory(ConnectionFactory connectionFactory){
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+
+        factory.setConnectionFactory(connectionFactory);
+        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        factory.setConcurrentConsumers(1);
+        factory.setMaxConcurrentConsumers(1);
+        // factory.setMessageConverter();
+
+        factory.setDeBatchingEnabled(true);
+        factory.setBatchListener(true); // configures a BatchMessageListenerAdapter
+        factory.setConsumerBatchEnabled(true);
+        factory.setBatchSize(10);
+
+        return factory;
+    }
+
     @Bean("uniConcurrencyContainerFactory")
     public RabbitListenerContainerFactory uniConcurrencyContainerFactory(ConnectionFactory connectionFactory){
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();

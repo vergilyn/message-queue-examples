@@ -11,7 +11,8 @@ public enum RabbitDefinedEnum {
     DELAY_RETRY("delay-message@retry"),
     DELAY_FAILED("delay-message@failed"),
     CONCURRENCY_UNI("concurrency-uni"),
-    CONCURRENCY_MULTI("concurrency-multi");
+    CONCURRENCY_MULTI("concurrency-multi"),
+    BATCH_GET_ACK("batch-get-ack");
 
     public final String queue;
     public final String exchange;

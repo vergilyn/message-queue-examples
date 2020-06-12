@@ -17,13 +17,12 @@ import org.springframework.amqp.rabbit.listener.MessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author VergiLyn
  * @date 2018/9/14
  */
-@Configuration
+// @Configuration
 public class AnnoConfiguration {
     @Autowired
     private ConsumerListener consumerListener;

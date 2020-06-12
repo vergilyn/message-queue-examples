@@ -1,5 +1,13 @@
 # message-queue-examples
 
+[Kafka、RabbitMQ、RocketMQ 消息发送性能对比](http://blog.sina.com.cn/s/blog_64e320320102xfes.html)  
+
+> kafka, 17.3w/s  
+>   
+> rocket, 11.6w/s  
+>   
+> RabbitMQ, 5.95w/s 为了保证消息的可靠性在吞吐量上做了取舍。RabbitMQ在消息持久化场景下的性能测，吞吐量在2.6w/s左右。
+
 ## MQ中的问题
 
 1. [消息队列的优缺点，区别]
