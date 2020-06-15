@@ -22,7 +22,7 @@
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
-    <rabbit:listener-container connection-factory="batchRabbitListenerContainerFactory" acknowledge="manual">
+    <rabbit:listener-container connection-factory="rabbitConnectionFactory" acknowledge="manual">
         <rabbit:listener queues="queue.batch-get-ack" ref="batchGetAckListener"/>
     </rabbit:listener-container>
 

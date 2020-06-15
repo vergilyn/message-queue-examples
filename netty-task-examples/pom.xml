@@ -12,15 +12,10 @@
 
     <artifactId>netty-task-examples</artifactId>
 
-    <properties>
-        <netty4.version>4.1.48.Final</netty4.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>${netty4.version}</version>
         </dependency>
     </dependencies>
 </project>
