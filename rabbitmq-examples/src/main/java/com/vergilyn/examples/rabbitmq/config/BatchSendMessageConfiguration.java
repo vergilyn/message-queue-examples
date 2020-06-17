@@ -3,11 +3,6 @@ package com.vergilyn.examples.rabbitmq.config;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
-import org.springframework.amqp.core.Exchange;
-import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.batch.SimpleBatchingStrategy;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -18,8 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
-
-import static com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum.BATCH_SEND_MSG;
 
 /**
  * @author vergilyn
@@ -45,21 +38,23 @@ public class BatchSendMessageConfiguration {
         return scheduler;
     }
 
-    @Bean("batchingRabbitTemplate")
+    @Bean("batchSendMessageRabbitTemplate")
     public BatchingRabbitTemplate batchingRabbitTemplate(ConnectionFactory connectionFactory,
             @Qualifier("batchTaskScheduler") TaskScheduler taskScheduler){
 
         SimpleBatchingStrategy batchingStrategy = new SimpleBatchingStrategy(BATCH_SEND_MSG_SIZE,
-                                                    BATCH_SEND_MSG_BUFFER_LIMIT,
-                                                    BATCH_SEND_MSG_TIMEOUT);
+                BATCH_SEND_MSG_BUFFER_LIMIT,
+                BATCH_SEND_MSG_TIMEOUT);
 
-        return new BatchingRabbitTemplate(connectionFactory, batchingStrategy,
-                taskScheduler);
+        // FIXME 2020-06-17 not exists `SimpleBatchingStrategy.setExchange()`
+
+        return new BatchingRabbitTemplate(connectionFactory, batchingStrategy, taskScheduler);
     }
 
 
     @Bean("batchSendMessageRabbitListenerContainerFactory")
     public SimpleRabbitListenerContainerFactory batchSendMessageRabbitListenerContainerFactory(ConnectionFactory connectionFactory){
+
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 
         factory.setConnectionFactory(connectionFactory);
@@ -83,26 +78,9 @@ public class BatchSendMessageConfiguration {
         factory.setBatchSize(BATCH_SEND_MSG_SIZE);
         factory.setReceiveTimeout(BATCH_SEND_MSG_TIMEOUT);
 
-        factory.setBatchingStrategy(new SimpleBatchingStrategy(BATCH_SEND_MSG_SIZE, BATCH_SEND_MSG_BUFFER_LIMIT, BATCH_SEND_MSG_TIMEOUT));
+        // factory.setBatchingStrategy(batchingStrategy);
 
         return factory;
-    }
-
-    @Bean("queue.batch-send-message")
-    public Queue queue(){
-        return new Queue(BATCH_SEND_MSG.queue);
-    }
-
-    @Bean("exchange.batch-send-message")
-    public Exchange exchange(){
-        return new DirectExchange(BATCH_SEND_MSG.exchange);
-    }
-
-    @Bean()
-    public Binding binding(@Qualifier("queue.batch-send-message") Queue queue,
-            @Qualifier("exchange.batch-send-message") Exchange exchange){
-
-        return BindingBuilder.bind(queue).to(exchange).with(BATCH_SEND_MSG.routing).noargs();
     }
 
 }

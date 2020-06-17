@@ -4,6 +4,8 @@ import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.annotation.Resource;
+
 import com.vergilyn.examples.rabbitmq.AbstractSpringbootTest;
 import com.vergilyn.examples.rabbitmq.listener.BatchSendMessageListener;
 
@@ -14,9 +16,8 @@ import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.batch.SimpleBatchingStrategy;
 import org.springframework.amqp.rabbit.core.BatchingRabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum.BATCH_SEND_MSG;
+import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.BATCH_SEND_MSG;
 
 /**
  * 测试 rabbitMQ 的批量发送。
@@ -29,11 +30,12 @@ import static com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum.BATCH_S
  */
 public class BatchSendMessageTest extends AbstractSpringbootTest {
 
-    @Autowired
+    @Resource(name = "batchSendMessageRabbitTemplate")
     public BatchingRabbitTemplate batchingRabbitTemplate;
 
     @Test
     public void batchSend(){
+
         AtomicInteger index = new AtomicInteger(0);
 
         HashedWheelTimer timer = new HashedWheelTimer();

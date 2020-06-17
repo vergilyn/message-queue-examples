@@ -1,5 +1,9 @@
 # RabbitMQ Example
 
+2020-06-17 >>>
+1. rabbitmq 在 batch-send 和 batch-receive 不是很好实现，且实现方式不是很理想，并且 spring-rabbit 的实现情况也不是很理想！
+2. `spring-AMQP` 或 `spring-rabbit`的 star 才 600 （apache-rocketmq 12k）。
+
 参考:
 - [spring-amqp-reference]
 - [rabbitmq-document]

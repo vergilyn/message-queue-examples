@@ -3,6 +3,7 @@ package com.vergilyn.examples.rabbitmq;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author VergiLyn
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @EnableRabbit
+@EnableScheduling
 public class RabbitMQApplication {
 
     public static void main(String[] args) {

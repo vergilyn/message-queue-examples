@@ -1,4 +1,50 @@
-# [rabbitMQ] batch consume.MD
+# 【200】rabbitmq - batch.MD
+
+- `BatchingRabbitTemplate#send()`
+- `SimpleBatchingStrategy#addToBatch()`
+
+
+
+
+
+
+
+## batch send
+
+1. **provider-side 丢失消息**
+> Batched data is held in memory. Unsent messages can be lost in the event of a system failure.  
+> 因为是基于 provider-side 的 memory 来将n条信息组装成1条message发送，所以存在消息丢失的风险。
+
+相对于后面的问题，感觉provider-side丢失消息产生的问题比较严重！
+所以，现在**个人还是推荐** provider 不使用 batch-send-message(即 `BatchingRabbitTemplate`)，还是使用逐条发送到rabbit-mq(即 `RabbitTemplate`)。  
+但是，consumer-side 还是采用batch-receive进行消费。  
+（因为是ACK，所以起码可以尽量避免消息丢失，但可能产生重复消费）
+
+2. `BatchingRabbitTemplate` 还处于 Experimental(试验性的)，并且`send()` 方法是 `synchronized` !  
+
+3. 因为`BatchingStrategy`是`BatchingRabbitTemplate`成员属性，且`SimpleBatchingStrategy.addToBatch()`中校验了 exchange 和 routing-key 是否一致，
+所以**同一个`BatchingRabbitTemplate`实例**只能send-message到相同的 exchange 和 routing-key。  
+
+并且，**exchange 和 routing-key 是在第一次调用 `BatchingRabbitTemplate#send()` 才赋值，而不是在实例化`SimpleBatchingStrategy`时。**  
+（并不存在 `simpleBatchingStrategy.setExchange()` 方法）
+
+4. `SimpleBatchingStrategy`中的 timeout 指的是：  
+> "A time after which a partial batch is sent when there is no new activity adding messages to the batch."  
+
+并不是类似滑动时间窗的timeout，具体看源码`BatchingRabbitTemplate#send()`。  
+例如`timeout = 5s`，单条消息发送的时间分别是：12:00:00, 12:00:04, 12:00:07, 12:00:13  
+
+（个人）期望的消息发送组合是：  
+- 12:00:00, 12:00:04
+- 12:00:07
+- 12:00:13
+ 
+但现有的默认实现情况是：
+- 12:00:00, 12:00:04, 12:00:07
+- 12:00:13 
+
+
+## batch receive
 
 ```
 SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();

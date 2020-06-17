@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static com.vergilyn.examples.rabbitmq.config.BatchGetAckConfiguration.BATCH_CONTAINER_BATCH_SIZE;
 import static com.vergilyn.examples.rabbitmq.config.BatchGetAckConfiguration.BATCH_CONTAINER_RECEIVE_TIMEOUT;
-import static com.vergilyn.examples.rabbitmq.constants.RabbitDefinedEnum.BATCH_GET_ACK;
+import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.BATCH_GET_ACK;
 
 /**
  * 观察 consumer-side 对批量消息的处理。
