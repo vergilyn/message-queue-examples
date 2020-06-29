@@ -15,7 +15,6 @@
 [RabbitMQ发布订阅实战-实现延时重试队列]: https://www.cnblogs.com/itrena/p/9044097.html
 
 blog参考:
-- [rabbit基础知识](https://blog.csdn.net/dreamchasering/article/details/77653512)
 - [RabbitMQ中 exchange、route、queue的关系](https://www.cnblogs.com/linkenpark/p/5393666.html)
 - [提升RabbitMQ消费速度的一些实践](https://www.cnblogs.com/bossma/p/practices-on-improving-the-speed-of-rabbitmq-consumption.html)
 - [rabbit queue-arguments 含义](https://blog.csdn.net/qq_26656329/article/details/77891793)
@@ -24,12 +23,27 @@ blog参考:
 
 ## 概念
 ### exchange-type, binding-key, routing-key
-在绑定（Binding）Exchange与Queue的同时，一般会指定一个binding-key。在绑定多个Queue到同一个Exchange的时候，这些Binding允许使用相同的binding key。
++ [AMQP 0-9-1 Model Explained](https://www.rabbitmq.com/tutorials/amqp-concepts.html)
+- [rabbit基础知识](https://blog.csdn.net/dreamchasering/article/details/77653512)
 
-生产者在将消息发送给Exchange的时候，一般会指定一个routing key，来指定这个消息的路由规则，生产者就可以在发送消息给Exchange时，通过指定routing key来决定消息流向哪里。
+![rabbitmq-hello-world-example-routing](../docs/images/rabbitmq-hello-world-example-routing.png)
 
-RabbitMQ常用的Exchange Type有三种：fanout、direct、topic。
+```
+Queue queue = new Queue("queue-name");
+Exchange exchange = new DirectExchange("exchange-name");  // direct、fanout、topic
 
+// 未体现出 binding-key
+Binding binding = BindingBuilder
+                    .bind(queue)
+                    .to(exchange)
+                    .with("routing-key")
+                    .noargs();
+```
+
+在绑定（Binding）Exchange与Queue的同时，一般会指定一个binding-key。在绑定多个Queue到同一个Exchange的时候，这些Binding允许使用相同的binding-key。  
+生产者在将消息发送给Exchange的时候，一般会指定一个routing-key，来指定这个消息的路由规则，生产者就可以在发送消息给Exchange时，通过指定routing-key来决定消息流向哪里。
+
+RabbitMQ常用的Exchange-Type有三种：  
 **fanout:** 把所有发送到该Exchange的消息投递到所有与它绑定的队列中。  
 **direct:** 把消息投递到那些binding key与routing key完全匹配的队列中。  
 **topic:** 将消息路由到binding key与routing key模式匹配的队列中。  
@@ -86,8 +100,19 @@ pull方式：
   - 默认的端短询方式的实时性依赖于pull间隔时间，间隔越大，实时性越低，长轮询方式和push一致
   - 消费端可以根据自身消费能力决定是否pull(流转机制)
 
-官方文档请移步：http://www.rabbitmq.com/api-guide.html#consuming
-push与pull区别参考自：https://blog.csdn.net/hyperin/article/details/79515849
+官方文档请移步：<http://www.rabbitmq.com/api-guide.html#consuming>
+push与pull区别参考自：<https://blog.csdn.net/hyperin/article/details/79515849>
+
+2020-06-18 >>>>   
+- [RabbitMQ：消息发送确认 与 消息接收确认（ACK）](https://www.jianshu.com/p/2c5eebfd0e95)
+
+**deliveryTag（唯一标识 ID）**：  
+当一个消费者向 RabbitMQ 注册后，会建立起一个 Channel ，RabbitMQ 会用`basic.deliver`方法向消费者**推送**消息，这个方法携带了一个 delivery-tag，
+它代表了rabbitmq向该 Channel 投递的这条消息的唯一标识 ID，是一个单调递增的正整数，delivery tag 的范围仅限于 Channel。
+
+**multiple**：  
+为了减少网络流量，手动确认可以被批处理，当该参数为 true 时，则可以一次性确认 delivery_tag 小于等于传入值的所有消息
+
 
 ## TTL(Time-To-Live)
 rabbitMQ可以针对queue，或者具体的message设置TTL `x-message-ttl`。
@@ -111,7 +136,6 @@ rabbitMQ可以针对queue，或者具体的message设置TTL `x-message-ttl`。
 
 ## vhost、exchange、queue
 [RabbitMQ的Vhost，Exchange，Queue原理分析](https://www.cnblogs.com/zhengchunyuan/p/9253725.html)
-[RabbitMQ中 exchange、route、queue的关系](https://www.cnblogs.com/linkenpark/p/5393666.html)
 
 ## 实际中遇到的问题
 1. java.net.SocketException: socket closed
@@ -138,6 +162,9 @@ rabbitMQ可以针对queue，或者具体的message设置TTL `x-message-ttl`。
 解决:
 　　在rabbitMQ安装plugins `rabbitmq-delayed-message-exchange`后问题解决。
 　　但是exchange-type会从`direct -> x-delayed-message`（rabbitmq-management中查看）
+
+4. 批量获取或批量消费
+貌似 rabbitMQ 和 spring-rabbitmq 都没有实现的很理想！
 
 ## 备注
 1. 4种手动ack：

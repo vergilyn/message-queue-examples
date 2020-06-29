@@ -13,7 +13,6 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.QOS_PREFETCH;
@@ -34,7 +33,7 @@ public class QosPrefetchScheduler {
     @Autowired
     private ConnectionFactory connectionFactory;
 
-    @Scheduled(cron = "0/5 * * * * *")
+    // @Scheduled(cron = "0/5 * * * * *")
     public void task(){
         int index = INDEX.getAndIncrement();
         System.out.printf("[consumer][%02d]: %s begin >>>> \r\n", index, LocalTime.now().toString());
