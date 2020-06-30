@@ -1,14 +1,22 @@
 # rocketmq-examples
 
+**official:**  
 + <https://rocketmq.apache.org/>
 + <https://github.com/apache/rocketmq>
++ <https://github.com/apache/rocketmq-spring>
 
+**article:**  
 - [阿里 RocketMQ 安装与简介](https://www.cnblogs.com/xiaodf/p/5075167.html)
 - [详解RocketMQ中的consumer](https://www.cnblogs.com/wanghuaijun/p/5881043.html)
 - [RocketMQ——顺序消息和重复消息](https://blog.csdn.net/gwd1154978352/article/details/80691916)
 - [rocketmq总结(消息的顺序、重复、事务、消费模式](https://www.cnblogs.com/xuwc/p/9034352.html)
 - [RocketMQ的消息发送及消费](https://www.cnblogs.com/wuzhenzhao/p/11504941.html)
 - [RocketMq 消费消息的两种方式 pull 和 push](https://blog.csdn.net/zhangcongyi420/article/details/90548393)
+
+**code-examples:**    
+- [高并发：RocketMQ 削峰实战！](https://mp.weixin.qq.com/s/aQJNazFzOtlbU4m6GhI0Nw)：
+`pullBatchSize` 与 `Broker.maxTransferCountOnMessageInMemory`的坑，以及批量消费。  
+
 
 ## windows下安装
 参考: [windows下RocketMQ安装部署](https://www.jianshu.com/p/4a275e779afa)
@@ -26,6 +34,21 @@
 - [RocketMQ中Topic、Tag、GroupName的设计初衷](https://my.oschina.net/javamaster/blog/2051703)
 - [RocketMQ概念篇](https://www.jianshu.com/p/10b012f0cd85)
 - [RocketMQ中Topic、Tag如何正确使用](https://blog.csdn.net/ye17186/article/details/89640286)
+
+> [RocketMQ知识整理与总结](https://www.cnblogs.com/zhyg/archive/2019/02/28/10451518.html)
+
+- topic：主题名称
+
+- tag：消息TAG，用于消息过滤对消息的整体分类，
+比如 topic为物流跟踪轨迹，轨迹包含 揽收 出库 入库 派送 签收，可以分别给这些相同topic不同类型的数据打标签分类解析处理
+
+- keys：Message索引键，多个用空格隔开，RocketMQ可以根据这些key快速检索到消息对消息关键字的提取方便查询，比如一条消息某个关键字是 运单号，之后我们可以使用这个运单号作为关键字进行查询
+
+- waitStoreMsgOK：消息发送时是否等消息存储完成后再返
+
+- delayTimeLevel：消息延迟级别，用于定时消息或消息重
+
+- User property：自定义消息属性
 
 ## 配置
 
