@@ -128,12 +128,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.vergilyn.examples</groupId>
-            <artifactId>mq-common-dependencies</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${projectlombok.version}</version>
@@ -223,6 +217,7 @@
                     <include>**/*.yml</include>
                     <include>**/*.yaml</include>
                     <include>**/*.json</include>
+                    <include>**/*.xml</include>
                 </includes>
             </testResource>
         </testResources>

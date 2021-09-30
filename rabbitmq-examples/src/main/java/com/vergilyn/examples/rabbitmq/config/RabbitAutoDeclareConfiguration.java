@@ -13,7 +13,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.context.annotation.Configuration;
 
 import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.EXCHANGE_MODE_FANOUT;
 import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.EXCHANGE_MODE_TOPIC;
@@ -22,7 +21,7 @@ import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.EXC
  * @author vergilyn
  * @date 2020-06-17
  */
-@Configuration
+// @Configuration
 public class RabbitAutoDeclareConfiguration implements BeanDefinitionRegistryPostProcessor {
 
     @Override

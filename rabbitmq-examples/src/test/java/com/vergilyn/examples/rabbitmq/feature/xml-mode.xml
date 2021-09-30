@@ -27,7 +27,7 @@
 
     <!--<rabbit:admin id="xmlAmqpAdmin" connection-factory="rabbitConnectionFactory"/>-->
 
-    <rabbit:queue name="queue.xml-hello" durable="true" auto-delete="false" exclusive="false" >
+    <rabbit:queue name="vergilyn.queue.xml-mode" durable="true" auto-delete="false" exclusive="false" >
         <!--<rabbit:queue-arguments>
             <entry key="x-dead-letter-exchange" value="exchange@failed"/>
             <entry key="x-dead-letter-routing-key" value="routing@failed"/>
@@ -35,14 +35,14 @@
         </rabbit:queue-arguments>-->
     </rabbit:queue>
 
-    <rabbit:direct-exchange name="exchange.xml-hello" auto-declare="true" durable="true" auto-delete="false" delayed="true">
+    <rabbit:direct-exchange name="vergilyn.exchange.xml-mode" auto-declare="true" durable="true" auto-delete="false" delayed="true">
         <rabbit:bindings>
-            <rabbit:binding queue="queue.xml-hello" key="routing.xml-hello"/>
+            <rabbit:binding queue="vergilyn.queue.xml-mode" key="vergilyn.routing.xml-mode"/>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
     <rabbit:listener-container connection-factory="rabbitConnectionFactory" acknowledge="manual">
-        <rabbit:listener queues="queue.xml-hello" ref="consumerListener"/>
+        <rabbit:listener queues="vergilyn.queue.xml-mode" ref="consumerListener"/>
     </rabbit:listener-container>
 
 </beans>

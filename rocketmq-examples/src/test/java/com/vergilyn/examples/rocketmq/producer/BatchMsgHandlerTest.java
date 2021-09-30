@@ -167,7 +167,7 @@ public class BatchMsgHandlerTest {
     private List<Message> createMsg(int size){
         List<Message> messages = Lists.newArrayListWithCapacity(size);
         for (int i = 0; i < size; i++){
-            MessageDto messageDto = MessageDto.Builder.newInstance()
+            MessageDto messageDto = MessageDto.builder()
                     .id((long) i)
                     .str("user-" + i)
                     .build();

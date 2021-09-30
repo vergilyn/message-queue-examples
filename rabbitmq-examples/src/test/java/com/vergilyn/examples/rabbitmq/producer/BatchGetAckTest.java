@@ -4,7 +4,7 @@ import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.vergilyn.examples.rabbitmq.AbstractSpringbootTest;
+import com.vergilyn.examples.rabbitmq.AbstractRabbitMQApplicationTests;
 import com.vergilyn.examples.rabbitmq.listener.BatchGetAckListener;
 
 import io.netty.util.HashedWheelTimer;
@@ -32,7 +32,7 @@ import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.BAT
  * @see BatchGetAckListener
  */
 @Slf4j
-public class BatchGetAckTest extends AbstractSpringbootTest {
+public class BatchGetAckTest extends AbstractRabbitMQApplicationTests {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

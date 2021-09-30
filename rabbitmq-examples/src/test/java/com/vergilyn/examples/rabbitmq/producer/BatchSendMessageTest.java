@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
-import com.vergilyn.examples.rabbitmq.AbstractSpringbootTest;
+import com.vergilyn.examples.rabbitmq.AbstractRabbitMQApplicationTests;
 import com.vergilyn.examples.rabbitmq.listener.BatchSendMessageListener;
 
 import io.netty.util.HashedWheelTimer;
@@ -28,7 +28,7 @@ import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.BAT
  *
  * @see BatchSendMessageListener
  */
-public class BatchSendMessageTest extends AbstractSpringbootTest {
+public class BatchSendMessageTest extends AbstractRabbitMQApplicationTests {
 
     @Resource(name = "batchSendMessageRabbitTemplate")
     public BatchingRabbitTemplate batchingRabbitTemplate;

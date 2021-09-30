@@ -1,105 +1,39 @@
 package com.vergilyn.examples.javabean;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.vergilyn.examples.constants.MessageModeEnum;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.ToString;
+import lombok.experimental.Tolerate;
 
 /**
  * @author VergiLyn
  * @date 2019-05-05
  */
 @Data
-@ToString
+@Builder
 public class MessageDto implements Serializable {
     private Long id;
     private Integer integer;
     private boolean bool;
     private String str;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss.SSS")
-    private Date date;
+    private LocalDateTime date;
     private RabbitMode rabbitMode;
 
-    private long timestamp;
+    private long timestamp = System.currentTimeMillis();
 
-    public MessageDto(){
-        this.timestamp = System.currentTimeMillis();
+    // `@Data` 与 `@Builder` 一起使用时，没有无参构造函数的问题
+    @Tolerate
+    public MessageDto() {
     }
 
-    public static final class Builder {
-        private Long id;
-        private Integer integer;
-        private boolean bool;
-        private String str;
-        private Date date;
-        private final RabbitMode rabbitMode = new RabbitMode();
-
-        private Builder() {
-        }
-
-        public static Builder newInstance() {
-            return new Builder();
-        }
-
-        public Builder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder integer(Integer integer) {
-            this.integer = integer;
-            return this;
-        }
-
-        public Builder bool(boolean bool) {
-            this.bool = bool;
-            return this;
-        }
-
-        public Builder str(String str) {
-            this.str = str;
-            return this;
-        }
-
-        public Builder date(Date date) {
-            this.date = date;
-            return this;
-        }
-
-        public Builder rabbitMultiple(boolean multiple) {
-            this.rabbitMode.setMultiple(multiple);
-            return this;
-        }
-
-        public Builder rabbitRequeue(boolean requeue) {
-            this.rabbitMode.setRequeue(requeue);
-            return this;
-        }
-
-        public Builder rabbitMode(MessageModeEnum mode) {
-            this.rabbitMode.setMode(mode);
-            return this;
-        }
-
-        public Builder rabbitConsumerError(boolean consumerError) {
-            this.rabbitMode.setConsumerError(consumerError);
-            return this;
-        }
-
-        public MessageDto build() {
-            MessageDto messageDto = new MessageDto();
-            messageDto.setId(id);
-            messageDto.setInteger(integer);
-            messageDto.setBool(bool);
-            messageDto.setStr(str);
-            messageDto.setDate(date);
-            messageDto.setRabbitMode(rabbitMode);
-
-            return messageDto;
-        }
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
     }
 }

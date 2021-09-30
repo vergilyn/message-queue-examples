@@ -2,7 +2,7 @@ package com.vergilyn.examples.rabbitmq.producer;
 
 import java.time.LocalTime;
 
-import com.vergilyn.examples.rabbitmq.AbstractSpringbootTest;
+import com.vergilyn.examples.rabbitmq.AbstractRabbitMQApplicationTests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -14,7 +14,7 @@ import static com.vergilyn.examples.rabbitmq.constants.RabbitAutoDeclareEnum.QOS
  * @author vergilyn
  * @date 2020-06-17
  */
-public class QosPrefetchTest extends AbstractSpringbootTest {
+public class QosPrefetchTest extends AbstractRabbitMQApplicationTests {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

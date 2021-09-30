@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.vergilyn.examples.constants.MessageModeEnum;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  * @date 2019-05-07
  */
 @Data
+@Builder
 public class RabbitMode implements Serializable {
     private boolean multiple;
     private boolean requeue;

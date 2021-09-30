@@ -1,0 +1,15 @@
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 123456
+    virtual-host: "/"
+    cache:
+      channel:
+        size: 30
+    requested-heartbeat: 0
+
+queue:
+  delay-message:
+    x-message-ttl: 300000

@@ -1,0 +1,40 @@
+version: "3.9"
+
+services: 
+    rabbitMQ:
+        # 基于"Ubuntu 20.04.2"，没有tzdata，无法直接`ENV TZ`更改timezone
+        build:
+            context: ""
+            dockerfile: Dockerfile
+            args:
+                TIME_ZONE: 'Asia/Chongqing'
+                TAGS_RABBITMQ: '${TAGS_RQBBITMQ}'
+        image: vergilyn-rabbitmq:${TAGS_RQBBITMQ}
+        container_name: vergilyn-rabbitmq-${TAGS_RQBBITMQ}
+        restart: "no"
+        # One of the important things to note about RabbitMQ is that it stores data based on what it calls the "Node Name",
+        # which defaults to the hostname.
+        # What this means for usage in Docker is that we should specify `-h`/`--hostname` explicitly for each daemon
+        # so that we don't get a random hostname and can keep track of our data
+        # 如果不指定，每次`docker compose up`会随机生成一个NODE-NAME（大约1~2G硬盘消耗）
+        hostname: vergilyn-docker-rabbitmq-node
+        ports:
+            - 15691:15691
+            - 15692:15692
+            - 25672:25672
+            - 4369:4369
+            - 5671:5671
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            # rabbitmq:{version}-management, https://www.rabbitmq.com/plugins.html#enabled-plugins-file
+            - "./config/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+            - "./config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
+            - "./config/10-default-guest-user.conf:/etc/rabbitmq/conf.d/10-default-guest-user.conf"
+            - "./config/management_agent.disable_metrics_collector.conf:/etc/rabbitmq/conf.d/management_agent.disable_metrics_collector.conf"
+            - "D:/docker-volumes/rabbitmq-${TAGS_RQBBITMQ}/lib/:/var/lib/rabbitmq/"
+            - "D:/docker-volumes/rabbitmq-${TAGS_RQBBITMQ}/log/:/var/log/rabbitmq/"
+
+        # https://www.rabbitmq.com/configure.html#supported-environment-variables
+        environment:
+            RABBITMQ_NODE_IP_ADDRESS: 0.0.0.0

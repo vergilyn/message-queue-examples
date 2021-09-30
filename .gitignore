@@ -65,4 +65,5 @@ Temporary Items
 .idea
 *.iml
 /out/
+.flattened-pom.xml
 
