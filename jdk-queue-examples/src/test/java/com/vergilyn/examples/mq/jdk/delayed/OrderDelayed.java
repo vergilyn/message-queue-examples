@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +25,7 @@ public class OrderDelayed implements Delayed {
 
     private String name;
     private long delayedMs;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
+    @JSONField(format = "HH:mm:ss")
 //    @JsonSerialize(using = LocalTimeSerializer.class)
 //    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime deadline;

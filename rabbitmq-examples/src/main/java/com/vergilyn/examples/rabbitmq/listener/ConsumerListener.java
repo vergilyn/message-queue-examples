@@ -2,11 +2,11 @@ package com.vergilyn.examples.rabbitmq.listener;
 
 import java.nio.charset.StandardCharsets;
 
+import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
 import com.vergilyn.examples.constants.MessageModeEnum;
 import com.vergilyn.examples.javabean.MessageDto;
 import com.vergilyn.examples.javabean.RabbitMode;
-import com.vergilyn.examples.util.DefaultObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -36,7 +36,7 @@ public class ConsumerListener implements ChannelAwareMessageListener {
         MessageProperties properties = message.getMessageProperties();
         long deliveryTag = properties.getDeliveryTag();
         String body = new String(message.getBody(), StandardCharsets.UTF_8);
-        MessageDto messageDto = DefaultObjectMapper.getInstance().readValue(body, MessageDto.class);
+        MessageDto messageDto = JSON.parseObject(body, MessageDto.class);
         RabbitMode rabbitMode = messageDto.getRabbitMode();
 
         log.info("consumer-queue >>>> {}, body: {}", properties.getConsumerQueue(), body);

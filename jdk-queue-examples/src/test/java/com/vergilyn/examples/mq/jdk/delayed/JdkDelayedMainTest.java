@@ -3,7 +3,7 @@ package com.vergilyn.examples.mq.jdk.delayed;
 import java.time.LocalTime;
 import java.util.concurrent.DelayQueue;
 
-import com.vergilyn.examples.util.DefaultObjectMapper;
+import com.alibaba.fastjson.JSON;
 
 /**
  * DelayQueue是一个BlockingQueue（无界阻塞）队列，它本质就是封装了一个PriorityQueue（优先队列），PriorityQueue内部使用完全二叉堆（不知道的自行了解哈）来实现队列元素排序，
@@ -16,6 +16,7 @@ import com.vergilyn.examples.util.DefaultObjectMapper;
  *
  * @see io.netty.util.concurrent.ScheduledFutureTask
  */
+@SuppressWarnings("JavadocReference")
 public class JdkDelayedMainTest {
 
     public static void main(String[] args) throws InterruptedException {
@@ -39,7 +40,7 @@ public class JdkDelayedMainTest {
              * take() 阻塞方式获取，没有到期的元素线程将会等待。
              */
             OrderDelayed task = delayQueue.take();
-            System.out.printf("order: %s, exec-time: %s \r\n", DefaultObjectMapper.writeValueAsString(task), LocalTime.now());
+            System.out.printf("order: %s, exec-time: %s \r\n", JSON.toJSONString(task), LocalTime.now());
 
             // TimeUnit.SECONDS.sleep(1);
         }

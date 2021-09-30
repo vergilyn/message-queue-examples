@@ -1,27 +1,12 @@
 package com.vergilyn.examples.util;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-
 /**
  * TODO 2020-05-18 optimize
  * @author vergilyn
  * @date 2020-05-18
  */
 public class DefaultObjectMapper {
-
+/*
     private static final ObjectMapper INSTANCE = new ObjectMapper();
 
 
@@ -74,5 +59,5 @@ public class DefaultObjectMapper {
         }
 
         return rs;
-    }
+    }*/
 }
