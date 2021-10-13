@@ -2,5 +2,6 @@ spring:
   application:
     name: rocketmq-examples
 
-server:
-  port: 8080
+  profiles:
+    active:
+      - rocketmq

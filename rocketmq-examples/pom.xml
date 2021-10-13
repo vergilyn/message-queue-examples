@@ -12,6 +12,11 @@
 
     <artifactId>rocketmq-examples</artifactId>
 
+    <properties>
+        <rocketmq-client.version>4.9.1</rocketmq-client.version>
+        <rocketmq-spring-boot-starter.version>2.2.1</rocketmq-spring-boot-starter.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.vergilyn.examples</groupId>
@@ -27,13 +32,13 @@
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-client</artifactId>
-            <version>4.4.0</version>
+            <version>${rocketmq-client.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
+            <version>${rocketmq-spring-boot-starter.version}</version>
         </dependency>
 
     </dependencies>

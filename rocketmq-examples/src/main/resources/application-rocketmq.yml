@@ -1,0 +1,22 @@
+## SEE https://github.com/apache/rocketmq-spring
+## org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration
+rocketmq:
+  name-server: localhost:9876
+  access-channel: LOCAL
+
+  ## org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration#defaultMQProducer(...)
+  ## org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration#rocketMQTemplate(...)
+  producer:
+    ## Group name of producer.
+    group: spring-boot-producer-group
+    send-message-timeout: 3000
+    ## Maximum allowed message size in bytes. 约等于 4M
+    max-message-size: 4000000
+    retry-times-when-send-async-failed: 2
+    retry-times-when-send-failed: 2
+    retry-next-server: false
+    enable-msg-trace: false
+    compress-message-body-threshold: 0
+    customized-trace-topic: RMQ_SYS_TRACE_TOPIC
+    # access-key: ""
+    # secret-key:

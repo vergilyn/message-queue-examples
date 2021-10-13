@@ -1,8 +1,5 @@
 package com.vergilyn.examples.rocketmq.constants;
 
-/**
- * @date 2019/1/31
- */
 public interface RocketConstants {
     String NAMESRV_ADDR = "localhost:9876";
 
