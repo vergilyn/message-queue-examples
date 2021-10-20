@@ -63,6 +63,7 @@
 
         <!-- unit-test -->
         <testng.version>7.4.0</testng.version>
+        <awaitility.version>4.1.0</awaitility.version>
         <mockito-core.version>3.12.4</mockito-core.version>
         <hamcrest.version>2.2</hamcrest.version>
         <jmh.version>1.29</jmh.version>
@@ -185,6 +186,12 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!-- mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
@@ -204,6 +211,7 @@
             <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
