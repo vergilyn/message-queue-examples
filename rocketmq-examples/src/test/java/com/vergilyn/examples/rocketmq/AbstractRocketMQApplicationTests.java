@@ -9,5 +9,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest(classes = RocketMQApplication.class)
 public abstract class AbstractRocketMQApplicationTests extends AbstractRocketMQTests{
 
-
 }

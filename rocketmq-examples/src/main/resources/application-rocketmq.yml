@@ -20,3 +20,6 @@ rocketmq:
     customized-trace-topic: RMQ_SYS_TRACE_TOPIC
     # access-key: ""
     # secret-key:
+
+  consumer:
+    pull-batch-size:
