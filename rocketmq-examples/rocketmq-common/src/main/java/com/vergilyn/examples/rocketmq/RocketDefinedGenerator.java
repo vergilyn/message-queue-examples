@@ -1,4 +1,4 @@
-package com.vergilyn.examples.rocketmq.constants;
+package com.vergilyn.examples.rocketmq;
 
 /**
  *

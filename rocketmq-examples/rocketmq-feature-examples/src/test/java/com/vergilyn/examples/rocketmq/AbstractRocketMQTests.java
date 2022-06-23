@@ -2,7 +2,6 @@ package com.vergilyn.examples.rocketmq;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.vergilyn.examples.rocketmq.constants.RocketDefinedGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.exception.MQBrokerException;
@@ -26,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public abstract class AbstractRocketMQTests {
-    protected static final String NAMESRV_ADDR = "localhost:9876";
+    protected static final String NAMESRV_ADDR = RocketConstants.NAMESRV_ADDR;
 
     protected DefaultMQProducer createProducer(RocketDefinedGenerator defined) {
         return createProducer(defined.producerGroup());

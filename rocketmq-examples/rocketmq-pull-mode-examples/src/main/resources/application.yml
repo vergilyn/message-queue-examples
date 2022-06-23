@@ -1,6 +1,6 @@
 spring:
   application:
-    name: rocketmq-feature-examples
+    name: rocketmq-pull-mode-examples
 
   profiles:
     active:

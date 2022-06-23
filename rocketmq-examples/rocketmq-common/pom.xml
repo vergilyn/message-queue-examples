@@ -10,13 +10,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>rocketmq-feature-examples</artifactId>
+    <artifactId>rocketmq-common</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.vergilyn.examples.rocketmq</groupId>
-            <artifactId>rocketmq-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
+
 </project>

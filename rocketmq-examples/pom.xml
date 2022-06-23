@@ -16,6 +16,8 @@
 
     <modules>
         <module>rocketmq-feature-examples</module>
+        <module>rocketmq-pull-mode-examples</module>
+        <module>rocketmq-common</module>
     </modules>
 
     <properties>

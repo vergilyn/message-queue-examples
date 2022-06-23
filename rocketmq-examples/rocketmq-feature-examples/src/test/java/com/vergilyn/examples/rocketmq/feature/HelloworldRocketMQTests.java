@@ -2,7 +2,7 @@ package com.vergilyn.examples.rocketmq.feature;
 
 import com.alibaba.fastjson.JSON;
 import com.vergilyn.examples.rocketmq.AbstractRocketMQTests;
-import com.vergilyn.examples.rocketmq.constants.RocketDefinedGenerator;
+import com.vergilyn.examples.rocketmq.RocketDefinedGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
