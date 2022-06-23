@@ -1,16 +1,9 @@
 package com.vergilyn.examples.rocketmq.producer;
 
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.vergilyn.examples.javabean.MessageDto;
 import com.vergilyn.examples.rocketmq.constants.RocketConstants;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPullConsumer;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -30,9 +23,13 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import static com.vergilyn.examples.rocketmq.constants.RocketConstants.BatchConstants.GROUP_BATCH;
-import static com.vergilyn.examples.rocketmq.constants.RocketConstants.BatchConstants.TAGS_BATCH_SEND_MSG;
-import static com.vergilyn.examples.rocketmq.constants.RocketConstants.BatchConstants.TOPIC_BATCH_SEND_MSG;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static com.vergilyn.examples.rocketmq.constants.RocketConstants.BatchConstants.*;
 import static com.vergilyn.examples.rocketmq.constants.RocketConstants.NAMESRV_ADDR;
 
 /**

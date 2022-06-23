@@ -1,13 +1,8 @@
 package com.vergilyn.examples.rocketmq.feature;
 
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.alibaba.fastjson.JSON;
 import com.vergilyn.examples.rocketmq.AbstractRocketMQTests;
 import com.vergilyn.examples.rocketmq.constants.RocketDefinedGenerator;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -23,6 +18,10 @@ import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 import org.junit.jupiter.api.Test;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @SuppressWarnings("JavadocReference")

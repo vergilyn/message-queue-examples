@@ -1,13 +1,7 @@
 package com.vergilyn.examples.rocketmq.feature;
 
-import java.nio.charset.StandardCharsets;
-import java.time.LocalTime;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.vergilyn.examples.rocketmq.AbstractRocketMQApplicationTests;
 import com.vergilyn.examples.rocketmq.constants.RocketDefinedGenerator;
-
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -21,6 +15,11 @@ import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Import;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalTime;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 期望：限制消费频率，例如 100qps。 <br/>

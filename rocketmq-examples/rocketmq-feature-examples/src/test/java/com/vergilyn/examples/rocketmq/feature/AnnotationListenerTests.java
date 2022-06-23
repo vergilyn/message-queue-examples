@@ -1,11 +1,7 @@
 package com.vergilyn.examples.rocketmq.feature;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.alibaba.fastjson.JSON;
 import com.vergilyn.examples.rocketmq.AbstractRocketMQApplicationTests;
-
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -16,11 +12,16 @@ import org.apache.rocketmq.client.impl.consumer.PullMessageService;
 import org.apache.rocketmq.client.impl.consumer.RebalanceService;
 import org.apache.rocketmq.client.impl.factory.MQClientInstance;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.spring.annotation.ConsumeMode;
+import org.apache.rocketmq.spring.annotation.SelectorType;
 import org.apache.rocketmq.spring.autoconfigure.ListenerContainerConfiguration;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.apache.rocketmq.spring.support.DefaultRocketMQListenerContainer;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Import;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @SuppressWarnings("JavadocReference")
 @Import(AnnotationListenerTests.HelloworldAnnotationListener.class)
@@ -53,7 +54,10 @@ public class AnnotationListenerTests extends AbstractRocketMQApplicationTests {
 	 */
 	@org.apache.rocketmq.spring.annotation.RocketMQMessageListener(
 			consumerGroup = HelloworldAnnotationListener.ANNOTATION_CONSUMER_GROUP,
-			topic = "vergilyn_topic_helloworld"
+			topic = "vergilyn_topic_helloworld",
+			selectorType = SelectorType.TAG,
+			selectorExpression = "*",
+			consumeMode = ConsumeMode.CONCURRENTLY
 	)
 	public static class HelloworldAnnotationListener implements RocketMQListener<Message> {
 		public static final String ANNOTATION_CONSUMER_GROUP = "vergilyn_consumer_group_helloworld_anno";

@@ -5,12 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>message-queue-examples</artifactId>
         <groupId>com.vergilyn.examples</groupId>
+        <artifactId>message-queue-examples</artifactId>
         <version>${revision}</version>
     </parent>
 
+    <groupId>com.vergilyn.examples.rocketmq</groupId>
     <artifactId>rocketmq-examples</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>rocketmq-feature-examples</module>
+    </modules>
 
     <properties>
         <rocketmq-client.version>4.9.1</rocketmq-client.version>

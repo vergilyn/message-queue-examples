@@ -1,14 +1,7 @@
 package com.vergilyn.examples.rocketmq.feature.consumer;
 
-import java.time.LocalDateTime;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import com.vergilyn.examples.rocketmq.AbstractRocketMQTests;
 import com.vergilyn.examples.rocketmq.constants.RocketDefinedGenerator;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -23,6 +16,12 @@ import org.apache.rocketmq.remoting.exception.RemotingException;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 多个ConsumerGroup 集群消费
