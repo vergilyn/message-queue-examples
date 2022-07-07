@@ -14,6 +14,7 @@ import org.apache.rocketmq.spring.autoconfigure.RocketMQProperties;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.apache.rocketmq.spring.support.RocketMQMessageConverter;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -77,10 +78,11 @@ public abstract class AbstractRocketMQTests {
 
         LocalDateTime now = LocalDateTime.now();
         for (int i = 0; i < size; i++) {
+            String body = String.format("{\"now\": \"%s\", \"index\": %d}", now, i);
             Message message = new Message(topic,
                                           tags,
                                           generatorKey(now) + "-" + i,
-                                          JSON.toJSONBytes(String.format("{\"now\": \"%s\", \"index\": %d}", now, i)));;
+                                          body.getBytes(StandardCharsets.UTF_8));
 
 
             messages.add(message);
@@ -109,6 +111,10 @@ public abstract class AbstractRocketMQTests {
 
             for (Message message : messages) {
                 producer.send(message);
+
+                System.out.printf("[rocketMQ-provider] >>>> key: %s, body: %s \n", message.getKeys(), getBodyString(message));
+                // 2022-07-06，
+                TimeUnit.MILLISECONDS.sleep(100);
             }
 
         } catch (MQClientException | InterruptedException | RemotingException | MQBrokerException e) {
@@ -116,6 +122,10 @@ public abstract class AbstractRocketMQTests {
         }finally {
             producer.shutdown();
         }
+    }
+
+    protected String getBodyString(Message message){
+        return new String(message.getBody(), StandardCharsets.UTF_8);
     }
 
     protected void sleep(TimeUnit unit, long timeout){
@@ -134,4 +144,5 @@ public abstract class AbstractRocketMQTests {
             // do nothing
         }
     }
+
 }

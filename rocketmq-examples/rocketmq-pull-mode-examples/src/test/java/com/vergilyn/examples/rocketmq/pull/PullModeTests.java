@@ -2,6 +2,7 @@ package com.vergilyn.examples.rocketmq.pull;
 
 import com.alibaba.fastjson.JSON;
 import com.vergilyn.examples.rocketmq.AbstractRocketMQPullModeApplicationTests;
+import com.vergilyn.examples.rocketmq.RocketDefinedGenerator;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
@@ -24,8 +25,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @SuppressWarnings("JavadocReference")
-@Import(AnnotationListenerTests.HelloworldAnnotationListener.class)
-public class AnnotationListenerTests extends AbstractRocketMQPullModeApplicationTests {
+@Import(PullModeTests.PullModeListener.class)
+public class PullModeTests extends AbstractRocketMQPullModeApplicationTests {
+	private static final String POSTFIX = "pull_mode";
+	public static final String CONSUMER_GROUP = RocketDefinedGenerator.PREFIX_GROUP_CONSUMER + POSTFIX;
+	public static final String TOPIC = RocketDefinedGenerator.PREFIX_TOPIC + POSTFIX;
+	public static final String TAG = RocketDefinedGenerator.PREFIX_TAG + POSTFIX;
+
 
 	@Test
 	public void annotationListener(){
@@ -53,14 +59,13 @@ public class AnnotationListenerTests extends AbstractRocketMQPullModeApplication
 	 * </p>
 	 */
 	@org.apache.rocketmq.spring.annotation.RocketMQMessageListener(
-			consumerGroup = HelloworldAnnotationListener.ANNOTATION_CONSUMER_GROUP,
-			topic = "vergilyn_topic_helloworld",
+			consumerGroup = CONSUMER_GROUP,
+			topic = TOPIC,
 			selectorType = SelectorType.TAG,
 			selectorExpression = "*",
 			consumeMode = ConsumeMode.CONCURRENTLY
 	)
-	public static class HelloworldAnnotationListener implements RocketMQListener<Message> {
-		public static final String ANNOTATION_CONSUMER_GROUP = "vergilyn_consumer_group_helloworld_anno";
+	public static class PullModeListener implements RocketMQListener<Message> {
 		private static final AtomicInteger _index = new AtomicInteger(0);
 
 		/**
@@ -87,13 +92,13 @@ public class AnnotationListenerTests extends AbstractRocketMQPullModeApplication
 		public void onMessage(Message message) {
 			int index = _index.incrementAndGet();
 			System.out.printf("[%d][%s] message.class >>>> %s \n",
-			                  index, ANNOTATION_CONSUMER_GROUP, message.getClass().getName());
+			                  index, CONSUMER_GROUP, message.getClass().getName());
 
 			System.out.printf("[%d][%s] message >>>> %s \n",
-			                  index, ANNOTATION_CONSUMER_GROUP, JSON.toJSONString(message, true));
+			                  index, CONSUMER_GROUP, JSON.toJSONString(message, true));
 
 			System.out.printf("[%d][%s] body >>>> %s \n",
-			                  index, ANNOTATION_CONSUMER_GROUP, new String(message.getBody()));
+			                  index, CONSUMER_GROUP, new String(message.getBody()));
 
 			System.out.println();
 		}
