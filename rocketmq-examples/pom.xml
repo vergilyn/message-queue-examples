@@ -18,6 +18,7 @@
         <module>rocketmq-feature-examples</module>
         <module>rocketmq-pull-mode-examples</module>
         <module>rocketmq-common</module>
+        <module>rocketmq-order-consumer-examples</module>
     </modules>
 
     <properties>

@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>rocketmq-common</artifactId>
+    <packaging>jar</packaging>
 
 
 </project>

@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: rocketmq-order-consumer-examples
