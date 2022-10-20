@@ -1,6 +1,7 @@
 package com.vergilyn.examples.rocketmq.order;
 
 import com.google.common.collect.Lists;
+import com.vergilyn.examples.rocketmq.RocketClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.rocketmq.client.exception.MQBrokerException;
@@ -61,7 +62,7 @@ public class OrderProducerTests {
 	}
 
 	private void sendMsg(List<Message> messages){
-		DefaultMQProducer producer = createProducer(OrderConsumerConstants.GROUP_PRODUCER);
+		DefaultMQProducer producer = RocketClientUtils.createProducer(OrderConsumerConstants.GROUP_PRODUCER);
 		try {
 			producer.start();
 
@@ -73,7 +74,7 @@ public class OrderProducerTests {
 				SendResult sendResult = producer.send(message, new MessageQueueSelector() {
 					@Override
 					public MessageQueue select(List<MessageQueue> mqs, Message msg, Object arg) {
-						String bodyString = getBodyString(msg);
+						String bodyString = RocketClientUtils.getBodyString(msg);
 						int index;
 
 						if ("A".equalsIgnoreCase(bodyString)){
@@ -109,18 +110,6 @@ public class OrderProducerTests {
 		}finally {
 			producer.shutdown();
 		}
-	}
-
-	protected DefaultMQProducer createProducer(String producerGoup) {
-		DefaultMQProducer producer = new DefaultMQProducer(producerGoup);
-		producer.setNamesrvAddr(OrderConsumerConstants.NAMESRV_ADDR);
-		producer.setVipChannelEnabled(false);
-
-		return producer;
-	}
-
-	protected String getBodyString(Message message){
-		return new String(message.getBody(), StandardCharsets.UTF_8);
 	}
 
 }

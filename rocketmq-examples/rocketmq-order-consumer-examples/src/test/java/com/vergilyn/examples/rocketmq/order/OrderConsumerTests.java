@@ -19,6 +19,12 @@ import static com.vergilyn.examples.rocketmq.order.OrderConsumerConstants.*;
 public class OrderConsumerTests  {
 	public static final String TAG_SEPARATOR = " || ";
 
+	static {
+		// 实际无效，会在 `DefaultRocketMQListenerContainer#initRocketMQPushConsumer, Line: 572` 被强制修改
+		//   格式：`{name-server-addr}@{pid}@{nano-timestamp}`
+		System.setProperty("rocketmq.client.name", "vergilyn-client-order");
+	}
+
 	@SneakyThrows
 	@Test
 	public void annotationListener(){
@@ -44,7 +50,6 @@ public class OrderConsumerTests  {
 			consumeMode = ConsumeMode.ORDERLY
 	)
 	public static class OrderConsumerListener implements RocketMQListener<MessageExt> {
-
 
 		@Override
 		public void onMessage(MessageExt message) {
